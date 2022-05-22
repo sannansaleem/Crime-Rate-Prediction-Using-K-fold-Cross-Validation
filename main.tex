@@ -1,0 +1,406 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{xcolor}
+\usepackage{sectsty}
+\usepackage{xcolor,colortbl}
+\usepackage{float}
+\usepackage{soul}
+\usepackage{tikz}
+
+
+\title{ECON 4P05\\
+Final Project}
+\author {Sannan Saleem} \\
+
+
+\begin{document}
+%color
+\sectionfont{\color{PineGreen}}
+\subsectionfont{\color{Maroon}}
+\subsubsectionfont{\color{MidnightBlue}}
+
+\maketitle
+
+%outer border
+\begin{tikzpicture}[remember picture,overlay]
+     \draw[Yellow!70!black,line width=4pt] 
+     ([xshift=-1.5cm,yshift=-2cm]current page.north east) coordinate (A)--([xshift=1.5cm,yshift=-2cm]current page.north west) coordinate(B)--([xshift=1.5cm,yshift=2cm]current page.south west) coordinate (C)--([xshift=-1.5cm,yshift=2cm]current page.south east) coordinate(D)--cycle;
+\end{tikzpicture}
+
+%inner border
+\begin{tikzpicture}[remember picture,overlay]
+     \draw[PineGreen!40!WildStrawberry,line width=4.5pt] 
+     ([xshift=-2cm,yshift=-2.5cm]current page.north east) coordinate (A)--([xshift=2cm,yshift=-2.5cm]current page.north west) coordinate(B)--([xshift=2cm,yshift=2.5cm]current page.south west) coordinate (C)--([xshift=-2cm,yshift=2.5cm]current page.south east) coordinate(D)--cycle;
+\end{tikzpicture}
+
+\newpage
+\tableofcontents
+\newpage
+\listoftables
+
+
+
+\newpage
+\section{Introduction}
+
+In this final assignment, we will be predicting the number of college applications received  in the College data set and predicting per capita crime rate in the Boston data set using K fold cross validation.
+
+\section{Predicting the number of college applications received}
+
+\subsection{Test error obtained from linear model using least squares}
+By fitting a linear model using least squares on the training set, we found the test error obtained to be 982087.8
+
+\subsection{Test error obtained from ridge regression model with λ chosen by cross-validation}
+By fitting a ridge regression model on the training set with λ chosen by cross-validation, we found the test error obtained to be 2348802.
+
+\subsection{Test error and non-zero coefficient estimates obtained from lasso regression model with λ chosen by cross-validation}
+By fitting a lasso regression model on the training set with λ chosen by cross-validation, we found the test error obtained to be 1520625.\\
+The number of non-zero coefficients is 11.
+
+\subsection{Results obtained}
+Results obtained from the linear model produced an $R^2$ value of 0.8716348, the ridge regression model produced an $R^2$ value of 0.843124408, and the lasso regression model produced an $R^2$ value of 0.898438032. This means that we can accurately predict the number of college applications received with high accuracy. There is not much difference among the test errors resulting from these three approaches as the $R^2$ are all very similar and within a 6\% range, therefore using any of three models will output a high accuracy of predicting the number of college applications, however, lasso would produce the highest accuracy, as it's $R^2$ value is the highest.
+
+\newpage
+
+\section{Predicting the crime rate in Boston}
+
+\subsection{Best model based on the training set using the BIC}
+
+the Bayesian information criterion (BIC) is a criterion for model selection among a finite set of models. It is based, in part, on the likelihood function, and it is closely related to Akaike information criterion (AIC).As complexity of the model increases, bic value increases and as likelihood increases, bic decreases. Therefore the best model based on our training set using the BIC is model 2, with a value of -189.4580, as it is the lowest number, meaning that the likelihood is at its highest. 
+
+\subsection{Best X-variables model according to the smallest test error}
+
+Using a loop to compute the test errors, we obtained a vector of test errors which according to the smallest MSE, proved that the best x-variable model held 13 variables.
+
+\subsection{Performing best subset selection on the full data set and selecting the best x-variable model}
+
+Performing best subset selection on the full data set reported the best x-variable model as the model using 9 variables as predictors of the per capita crime rate.
+\newpage
+% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Tue, Apr 20, 2021 - 11:45:47
+\begin{table}[!htbp] \centering 
+  \caption{Coefficient table for final model 1} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & crim \\ 
+\hline \\[-1.8ex] 
+ zn & 0.043$^{**}$ \\ 
+  & (0.018) \\ 
+  & \\ 
+ indus & $-$0.099 \\ 
+  & (0.074) \\ 
+  & \\ 
+ nox & $-$10.466$^{**}$ \\ 
+  & (5.054) \\ 
+  & \\ 
+ dis & $-$1.003$^{***}$ \\ 
+  & (0.269) \\ 
+  & \\ 
+ rad & 0.540$^{***}$ \\ 
+  & (0.050) \\ 
+  & \\ 
+ ptratio & $-$0.271 \\ 
+  & (0.185) \\ 
+  & \\ 
+ black & $-$0.008$^{**}$ \\ 
+  & (0.004) \\ 
+  & \\ 
+ lstat & 0.118$^{*}$ \\ 
+  & (0.069) \\ 
+  & \\ 
+ medv & $-$0.181$^{***}$ \\ 
+  & (0.054) \\ 
+  & \\ 
+ Constant & 19.125$^{***}$ \\ 
+  & (6.095) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Observations & 506 \\ 
+R$^{2}$ & 0.452 \\ 
+Adjusted R$^{2}$ & 0.443 \\ 
+Residual Std. Error & 6.422 (df = 496) \\ 
+F Statistic & 45.538$^{***}$ (df = 9; 496) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+\newpage
+
+\subsection{Performing best subset selection with loop on the full data set and selecting the best x-variable model}
+
+This model is no different than the one found in question 4, as in both models, our 9 variable is the best x-variable model to predicict per capita crime rate.
+
+% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Tue, Apr 20, 2021 - 11:45:47
+\begin{table}[!htbp] \centering 
+  \caption{Coefficient Table for final model 2} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & crim \\ 
+\hline \\[-1.8ex] 
+ (Intecept) & 15.987 \\ 
+  & \\ 
+ zn & 0.043 \\ 
+  & \\ 
+ indus & $-$0.099 \\ 
+  & \\ 
+  chas & $-$0.060 \\ 
+  & \\ 
+ nox & $-$0.607 \\ 
+  & \\ 
+  rm & $-$9.483 \\ 
+  & \\ 
+  age & 0.532 \\ 
+  & \\ 
+ dis & 0.004 \\ 
+  & \\ 
+ rad & $-$0.935 \\ 
+  & \\ 
+  tax & 0.600 \\ 
+  & \\ 
+ ptratio & $-$0.004  \\ 
+  & \\ 
+ black & $-$0.285 \\ 
+  & \\ 
+ lstat & $-$0.007 \\ 
+  & \\ 
+ medv & 0.107 \\ 
+  & \\ 
+ 
+\hline \\[-1.8ex] 
+Standard Error & 0.974 \\ 
+
+\hline 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+\section{Conclusion}
+In conclusion, after testing the College data set to predict the number of applications received, we found that the lasso regression model on the training set with λ chosen by cross-validation is the best at predicting with the highest accuracy. After testing the Boston data set to predict per capita crime rate, we found that,despite using either an OLS approach or a 10-fold cross validation approach, the results stayed consistent in that the model with 9 variables is the best model to predict per capita crime rate.
+
+\newpage
+
+\section{Appendix}
+
+\subsection{Work Cited}
+James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An Introduction to Statistical Learning: with Applications in R (Springer Texts in Statistics) (1st ed. 2013, Corr. 7th printing 2017 ed.) [E-book].\\
+Springer. https://lms.brocku.ca/access/lessonbuilder/item/47651720/group/7e42f3bc-9d92-4e41-bf41-4ec95e1bd241/Lessons/ISLR%20Seventh%20Printing.pdf
+
+\subsection{R Input}
+\begin{verbatim}
+#1.2 Predicting the number of college applications received
+library(boot)
+library(MASS)
+library(tidyverse)
+library(caret)
+library("glmnet")
+library(ISLR)
+attach(College)
+set.seed(2)
+data('College')
+
+inTrain <- createDataPartition(College$Apps, p = 0.7, list = FALSE)
+df<-College
+names(df)
+
+# Q1: Split data into training and test set
+
+training_set <- College[inTrain,]
+testing_set <- College[-inTrain,]
+
+# Q2: Fit a linear model using least squares on the training set, and report the test error obtained.
+
+lin_mod<- glm(Apps ~ ., data = training_set)
+lin_mod
+lm_pred <-  predict(lin_mod, testing_set)
+lm_pred
+mean((lm_pred - testing_set$Apps)^2)
+
+
+mse <- cv.glm(training_set,lin_mod,K=10)
+mse
+mse$delta[1]
+mses<-cv.glm(training_set,lin_mod,K=10)$delta[1]
+mses # <- test error
+
+# Q3: Fit a ridge regression model on the training set, with λ chosen by cross-validation. Report the test error obtained.
+#PRELIM STUFF
+x<-model.matrix(Apps ~.,data=College)
+y<-df$Apps
+
+train<-sample(c(TRUE ,FALSE), nrow(College),rep=TRUE)
+test<-(!train)
+#PRELIM STUFF
+
+grid=10^seq(10,-2, length =100)
+
+model_ridge<-glmnet(x,y,alpha=0, lambda=grid)
+model_ridge_train<-glmnet (x[train,],y[train],alpha =0,lambda =grid)
+
+pred_ridge<-predict(model_ridge_train,s=4, newx=x[test ,])
+
+y_test<-y[test]
+cv<-mean(( pred_ridge - y_test)^2)
+
+cv<-cv.glmnet (x[train ,],y[train],alpha =0)
+opt_lambda<-cv$lambda.min
+opt_lambda
+
+pred_ridge<-predict(model_ridge_train,s=opt_lambda ,newx=x[test ,])
+mean((pred_ridge -y_test)^2)
+
+test_error_ridge <- mean((pred_ridge -y_test)^2)
+test_error_ridge
+
+
+
+# Q4:Fit a lasso model on the training set, with λ chosen by cross-validation. Report the test error obtained, along with the number of non-zero coefficient estimates.
+model_lasso<-glmnet(x,y,alpha=1, lambda=grid)
+
+dim(coef(model_lasso))
+model_lasso$lambda[70]
+coef(model_lasso)[,70]
+
+model_lasso_train<-glmnet(x[train ,],y[train],alpha=1,lambda =grid)
+
+cv1 <-cv.glmnet (x[train ,],y[train],alpha =1)
+optimal_lambda<-cv1$lambda.min
+optimal_lambda
+
+pred_lasso <-predict(model_lasso_train,s=optimal_lambda ,newx=x[test ,])
+mean((pred_lasso - y_test)^2)
+
+test_error_lasso <- mean((pred_lasso -y_test)^2)
+test_error_lasso
+
+## Q5: compare the results obtained by finding r^2
+
+test.avg <- mean(testing_set$Apps)
+
+
+lm.test.r2 <-  1 - mean((lm_pred - testing_set$Apps)^2) /
+  mean((y-test - test.avg)^2)
+
+ridge.test.r2 <-  1 - mean((pred_ridge -y_test)^2)/
+  mean((y-test - test.avg)^2)
+
+lasso.test.r2 <-  1 - mean((pred_lasso - y_test)^2) /
+  mean((y-test - test.avg)^2)
+  
+  #--------------------BEGIN QUESTION 1.3----------------------------------------
+library(MASS)
+library(tidyverse)
+library(caret)
+library(leaps)
+library(stargazer)
+library(ISLR)
+library(glmnet)
+set.seed(2)
+data("Boston")
+df <- Boston
+
+
+#----------------------------1------------------------------
+inTrain <- createDataPartition(Boston$crim, p = 0.7, list = FALSE)
+
+
+
+x_train <- Boston[inTrain, -1]
+y_train <- Boston[inTrain, 1]
+x_test <- Boston[-inTrain, -1]
+y_test <- Boston[-inTrain, 1]
+
+
+
+#----------------------------2-------------------------------
+best_subs <- regsubsets(x = x_train, y = y_train, nvmax = 13)
+
+
+
+fit_summary <- summary(best_subs)
+fit_summary
+fit_summary_BIC <- fit_summary$bic
+fit_summary_BIC
+plot(fit_summary_BIC)
+
+
+
+#-------------------------------3-----------------------------
+test_errors <- rep(NA,13)
+
+
+
+test.mat <- model.matrix(crim ~ ., data = Boston[-inTrain,])
+
+
+
+for (i in 1:13){
+  coefs <- coef(best_subs, id=i)
+  pred <- test.mat[,names(coefs)]%*%coefs
+  test_errors[i] <- sqrt(mean((y_test - pred)^2))
+}
+test_errors
+
+
+
+#---------------------------------4------------------------------
+fit_full_best<-regsubsets(crim~ .,df,nvmax=13)
+summary_best<-summary(fit_full_best)
+summary_best
+
+
+
+names(summary_best)
+full_model_rsqrd <- which.max(summary_best$adjr2)
+
+
+
+
+coef(fit_full_best,full_model_rsqrd)
+lm1 <- lm(crim ~ zn+indus+nox+dis+rad+ptratio+black+lstat+medv, data = df)
+summary(lm1)
+
+
+
+#------------------------------5----------------------------------
+k=10
+folds <- sample(1:k, nrow(Boston), replace = TRUE)
+test.x <- model.matrix(crim~., data = Boston[folds==k,])
+
+
+
+for(j in 1:k)
+{
+  best_fit = regsubsets(crim~., data = Boston[folds!=k,], nvmax = 13)
+  for(i in 1:13)
+  {
+    coefi <- coef(best_fit, i)
+    print(coefi)
+    
+    std_er_looped <- sd(coefi)/sqrt(length(best_fit))
+    print(std_er_looped)
+    
+    pred2 <- test.x[,names(coefi)]%*%coefi
+    cv <- mean((Boston$crim[folds==k]-pred2)^2)
+    print(cv)
+  }
+}
+
+summary5 <- summary(best_fit)
+best_looped <- which.max(summary5$adjr2)
+stargazer(print <- coefi)
+stargazer(std_er_looped)
+\end{verbatim}
+
+\end{document}
